@@ -6,34 +6,41 @@
 * 
 * @author Inés Cabrera Betancor
 * @date 30 OCT 2023
-* @brief Escriba un programa que lea un número natural e imprima como salida la suma de los dígitos del número en cuestión.
+* @brief El programa convierte un numero binario a decimal.
 * @bugs There are no known bugs
 * @see https://github.com/IB-2023-2024-P07-iterations/blob/main/iterations.md
 */
 
 #include<iostream>
+#include<cmath>
 
 void PrintProgramPurpose() {
-  std::cout << "This program print the sum of the digits of a number which is given by command line." << std::endl;
+  std::cout << "This program converts a sequence of 1 and 0 given by command line to decimal representation." << std::endl;
 }
 
 bool CheckCorrectParameters(const int argc, char *argv[], const int kCorrectNumber) {
   if (argc != kCorrectNumber) {
     std::cout << "This program has been executed with a wrong number of parameters" << std::endl << std::endl;
     std::cout << "This program should be called" << argv[0] << " param1" << std::endl;
-    std::cout << "param1: " << " An integer number which digits will be sum up" << std::endl;
+    std::cout << "param1: " << " A sequence of 1 and 0." << std::endl;
     return false;
   }
   return true;
 }
 
-int SumDigits(int num){
-  int suma{0};
-  while (num > 0) {
-    suma += (num % 10);
-    num /= 10;
+int Decimal(int binary){
+  int decimal{0}, resto{0}, counter{0};
+  while (binary != 0) {
+    resto= binary % 10;
+    binary /= 10;
+    if ( resto != 0 && resto != 1) {
+      std::cout << "Wrong Input." << std::endl;
+      return 1;
+    }
+    decimal += resto * pow(2,counter);
+    counter++;
   }
-  return suma;
+  return decimal;
 }
 
 int main(int argc, char* argv[]) {
@@ -42,6 +49,6 @@ int main(int argc, char* argv[]) {
     return 345;
   }
   std::cout << "Everything is fine!. Lets continue with the normal execution...\n" << std::endl;
-  std::cout << "The sum of the digits of " << argv[1] << " is " << SumDigits(atoi(argv[1])) << std::endl;
+  std::cout << "The decimal of the number " << argv[1] << " is " << Decimal(atoi(argv[1])) << std::endl;
   return 0;
 }
